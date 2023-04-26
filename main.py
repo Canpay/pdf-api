@@ -31,7 +31,8 @@ class PageInfo(BaseModel):
 
 @app.post("/upload_pdf")
 async def upload_pdf(uploaded_file: UploadFile = File(...)):
-    os.remove("temp_file.pdf")
+    if os.path.exists("temp_file.pdf"):
+        os.remove("temp_file.pdf")
     file_location = f"temp_file.pdf"
     with open(file_location, "wb+") as file_object:
         file_object.write(uploaded_file.file.read())
